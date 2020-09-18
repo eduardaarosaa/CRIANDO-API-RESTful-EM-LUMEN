@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use Dotenv\Validator;
+use Iluminate\Support\Facades\Validator;
 use Illuminate\Http\Request as Request;
 use App\Models\Cars;
 use Illuminate\Database\QueryException;
+use Illuminate\Support\Facades\Validator as FacadesValidator;
 /*Retornar os status code da requisição */
 use Symfony\Component\HttpFoundation\Response;
 
@@ -72,7 +73,7 @@ class CarsController extends Controller
 
     public function store(Request $request)
     {
-        $validator = Validator::make([
+        $validator = FacadesValidator::make(
             $request->all(),
             [
                 'name' => 'required | max:80',
@@ -81,8 +82,12 @@ class CarsController extends Controller
                 'date' => 'required | date_format: "Y-m-d"'
             ]
 
-        ]);
+        );
 
+        if($validator->fails()){
+
+            return response()->json($validator->errors(), Response::HTTP_OK);
+        }
         $car = $this->model->create($request->all());
 
         try{
