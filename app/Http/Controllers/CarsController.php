@@ -10,6 +10,8 @@ use Illuminate\Support\Facades\Validator as FacadesValidator;
 /*Retornar os status code da requisição */
 use Symfony\Component\HttpFoundation\Response;
 
+use App\Models\ValidationCars;
+
 
 class CarsController extends Controller
 {
@@ -75,12 +77,9 @@ class CarsController extends Controller
     {
         $validator = FacadesValidator::make(
             $request->all(),
-            [
-                'name' => 'required | max:80',
-                'description'=> 'required',
-                'model' => 'required | max: 10 | min:2',
-                'date' => 'required | date_format: "Y-m-d"'
-            ]
+            
+            //  Usando o validator 
+            ValidationCars::RULE_CAR
 
         );
 
@@ -103,7 +102,12 @@ class CarsController extends Controller
     }
 
     public function update($id, Request $request)
+
     {
+        $validator = FacadesValidator::make(
+            $request->all(),
+            ValidationCars::RULE_CAR
+        );
         //é necessário carregar a linha que vai alterar para depois fazer a alteração
         $car = $this->model->find($id)
             ->update($request->all()); //atualiza
