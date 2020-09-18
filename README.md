@@ -2,6 +2,23 @@ Branchs:
 1 - FirstCode,
 2 - RefactorCode,
 3 - RefactorCodeService
+
+<br>
+
+Routes: 
+get : http://localhost:8000/api/cars
+get : http://localhost:8000/api/car/1
+post: http://localhost:8000/api/car
+{
+    "name":"Fusca",
+    "description":"Branco",
+    "model": "1990",
+    "date": "2020-09-18"
+}
+
+put: http://localhost:8000/api/car/3
+delete: http://localhost:8000/api/car/9
+
 # Lumen PHP Framework
 
 [![Build Status](https://travis-ci.org/laravel/lumen-framework.svg)](https://travis-ci.org/laravel/lumen-framework)
